@@ -56,7 +56,7 @@ $(document).ready(function(){
                 if (items==10) {
                     $('#userInput').prop( "disabled", true );
                     $('#userBt').prop( "disabled", true );
-                    $('#underPost').html('<h3> Bowling round finished!\n Please reload the page for another round. </h3>').slideDown(1000);
+                    $('#underPost').html('<h3> Bowling round finished!</h3><br><h3> Please reload the page for another round. </h3>').slideDown(1500);
                 }
                 $('#userInput').val("").focus();
             }
