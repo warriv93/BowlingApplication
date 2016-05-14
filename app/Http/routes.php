@@ -15,7 +15,7 @@ Route::get('/', array(
 ));
 
 Route::get('/get', array(
-    'uses' => 'scoreController@getStats'
+    'uses' => 'scoreController@resetStats'
 ));
 
 // Route::delete('/score/{id}', array(

@@ -1,6 +1,6 @@
 // Main javascript
 
-//first
+//setup token to authenticate that its this site that sends the request to the server
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -9,6 +9,7 @@ $.ajaxSetup({
 
 $(document).ready(function(){
     $('#userInput').val("").focus();
+    $('#underPost').hide();
     // var id = 1;
     //
     // $.ajax({
@@ -19,45 +20,28 @@ $(document).ready(function(){
     //     }
     // });
 
-    // //ajax get request
-    // $.get('get/', function(response){
-    //     console.log(response);
-    //     $('#underInput').append(response);
-    // });
-    function getUpdates(){
+    function initiate(){
         $.ajax({
             type: "GET",
             url: "get/",
-            dataType: "json",
-            success: function(data){
-                console.log(data.value);
-                $('#underInput').append(data.value);
-            }
+            dataType: "json"
         });
     }
-    getUpdates();
+    initiate();
 
     $('#post').submit( function(e){
-
-        // console.log("submitted");
         e.preventDefault();
 
         //get data
         var dataString = "value=" + $('#userInput').val();
-        // console.log(dataString);
 
-        //ajax post
-        // $.post('post/', {value:data}, function(data){
-        //     console.log(data);
-        //     $('#postReqData').append(data.value);
-        // });
         $.ajax({
             type: "POST",
             url: "post/",
             data: dataString,
             success: function(data){
                 console.log(data);
-
+                //if x is returned append empty td after currentscore td else append currentscore td
                 if (data.newscore=="x") {
                     $('#currentScore').append('<td colspan="1">'+data.newscore+'</td><td colspan="1"></td>');
                 }else {
@@ -69,9 +53,13 @@ $(document).ready(function(){
                 if (items % 2==0) {
                     $('#totalScore').append('<td  colspan="2">'+data.totalscore+'</td>');
                 }
+                if (items==10) {
+                    $('#userInput').prop( "disabled", true );
+                    $('#userBt').prop( "disabled", true );
+                    $('#underPost').html('<h3> Bowling round finished!\n Please reload the page for another round. </h3>').slideDown(1000);
+                }
                 $('#userInput').val("").focus();
             }
         });
-
     });//end of submit
 });//end of document ready

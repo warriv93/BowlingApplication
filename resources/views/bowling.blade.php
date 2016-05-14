@@ -45,6 +45,9 @@
             <input type="submit" value="Click me" name="userBt" id="userBt" class="btn btn-primary">
         </form>
     </content>
+    <div id="underPost">
+        
+    </div>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/main.js') }}"></script>
     <link rel="stylesheet" href="{{ URL::asset('css/yoloStyle.css') }}" />

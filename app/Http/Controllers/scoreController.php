@@ -19,13 +19,8 @@ class scoreController extends Controller
     /**
     * handle data posted by ajax request
     */
-    public function getStats(){
-
-
-        // if ( Request::ajax() ) {
-        //     return Response::json(array('value' => 'yolo', 'state' => 'CA'));
-        //     // Return "yolo";
-        // }
+    public function resetStats(){
+        DB::table('scores')->truncate();
     }
 
     public function postStats(){
@@ -75,7 +70,6 @@ class scoreController extends Controller
                 DB::table('scores')
                     ->where('id', 1)
                     ->update(['storedScore' => $newscore]);
-
                 //update totalScore with bonuses
                 DB::table('scores')->increment('totalScore', $bonus);
 
@@ -85,15 +79,11 @@ class scoreController extends Controller
                 $scoreModel = new scores();
                 $scoreModel->storedScore = $newscore;
                 $scoreModel->totalScore = $newscore;
-                $scoreModel->counter = 1;
+                $scoreModel->counter = 0;
                 $scoreModel->save();
+                return $this->postStats();
             }
-
-
-            //DB::table('scores')->truncate();
-
-
-
+            //save stats to array and return as json obj
             $arr = array('newscore' => $printNewScore, 'oldscore' => $oldScore, 'totalscore' => $totalScore, 'counter' => $counter);
             //  "newscore: ".$printNewScore."Oldscore:  ".$oldScore. " totalscore: ".$totalScore. " counter: ".$counter
             return $arr;
